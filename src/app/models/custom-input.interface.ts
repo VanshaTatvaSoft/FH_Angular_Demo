@@ -2,7 +2,7 @@ export interface CustomInputInterface {
   appearance: 'outline' | 'fill';
   type: string;
   placeholder: string;
-  value: string;
+  value?: string;
   id: string;
   name: string;
   icon?: string | null;

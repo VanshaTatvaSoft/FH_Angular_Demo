@@ -1,5 +1,31 @@
 <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
   <h1 class="mb-3">Registeration</h1>
+  <p class="small mb-0">Please fill in the form to create an account.</p>
+  <hr class="my-4" />
+  @if(formSummaryError() !== '')
+  {
+    <div class="form-summary-error px-4 py-3">
+      <span class="text-danger fs-5">{{ formSummaryError() }}</span>
+    </div>
+  }
+  <!-- Email address input -->
+  <app-custom-input
+    formControlName="emailAddress"
+    [customInput]="{
+      appearance: 'outline',
+      label: 'Email address',
+      type: 'email',
+      placeholder: 'Enter email address',
+      value: '',
+      id: 'emailAddress',
+      name: 'emailAddress',
+      hint:'xyz123@gmail.com',
+      icon:'email',
+      disabled: false
+    }"
+    [formControl]="emailControl"
+  >
+  </app-custom-input>
 
   <!-- Username input -->
   <app-custom-input
@@ -54,13 +80,12 @@
 
   <!-- Role select list -->
   <app-custom-input
-    formControlName="role"
+    formControlName="roleId"
     [customInput]="{
       appearance: 'outline',
       label: 'role',
       type: 'select',
       placeholder: '',
-      value: '',
       id: 'role',
       name: 'role',
       disabled: false,

@@ -4,10 +4,13 @@ import { MatInputModule } from '@angular/material/input';
 import { CustomInputInterface } from '../../../models/custom-input.interface';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-custom-input',
-  imports: [MatFormFieldModule, MatIconModule, MatInputModule],
+  imports: [MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatOptionModule, NgClass],
   templateUrl: './custom-input.html',
   styleUrl: './custom-input.css',
   providers: [
@@ -51,11 +54,10 @@ export class CustomInput implements ControlValueAccessor {
     this.valueChange.emit(newValue);
   }
 
-  onSelect(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.customInput.value = select.value;
-    this.onChange(select.value);
-    this.valueChange.emit(select.value);
+  onSelect(event: MatSelectChange): void {
+    this.customInput.value = event.value;
+    this.onChange(event.value);
+    this.valueChange.emit(event.value);
   }
 
 

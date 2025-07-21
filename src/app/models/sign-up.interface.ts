@@ -4,5 +4,6 @@ export interface SignUpInterface {
   userName: string;
   firstName: string;
   lastName: string;
-  role: RoleInterface;
+  roleId: RoleInterface;
+  emailAddress: string;
 }
