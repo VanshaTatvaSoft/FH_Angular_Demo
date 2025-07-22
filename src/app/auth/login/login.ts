@@ -20,7 +20,6 @@ import {
   switchMap,
 } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
-import { LoginService } from '../../services/login-service/login-service';
 import { ToastrService } from 'ngx-toastr';
 import { CustomInput } from '../../shared/components/custom-input/custom-input';
 import { AuthApiService } from '../../services/auth-service/auth-api.service';

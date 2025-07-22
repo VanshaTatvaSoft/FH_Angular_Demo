@@ -5,7 +5,6 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MainNavbar } from './main-navbar/main-navbar';
 import { SecondNavbar } from './second-navbar/second-navbar';
 import { CookieService } from 'ngx-cookie-service';
-import { LoginService } from '../../services/login-service/login-service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthApiService } from '../../services/auth-service/auth-api.service';
 
