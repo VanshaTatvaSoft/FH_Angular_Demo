@@ -9,7 +9,7 @@ import { TogglePassword } from '../../../directives/toggle-password';
 
 @Component({
   selector: 'app-custom-input',
-  imports: [MatFormFieldModule, MatIconModule, MatInputModule, TogglePassword],
+  imports: [MatFormFieldModule, MatIconModule, MatInputModule, TogglePassword, NgClass],
   templateUrl: './custom-input.html',
   styleUrl: './custom-input.css',
   providers: [
@@ -53,11 +53,10 @@ export class CustomInput implements ControlValueAccessor {
     this.valueChange.emit(newValue);
   }
 
-  onSelect(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.customInput.value = select.value;
-    this.onChange(select.value);
-    this.valueChange.emit(select.value);
+  onSelect(event: MatSelectChange): void {
+    this.customInput.value = event.value;
+    this.onChange(event.value);
+    this.valueChange.emit(event.value);
   }
 
 
