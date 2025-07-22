@@ -6,7 +6,7 @@ import { CustomInput } from '../../shared/components/custom-input/custom-input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RoleOptions } from '../../shared/constants/select-options.constant.js'
-import { SignUpService } from '../../services/sign-up';
+import { AuthApiService } from '../../services/auth-service/auth-api.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,7 +17,7 @@ import { SignUpService } from '../../services/sign-up';
 export class SignUp {
   signUpForm!: FormGroup;
   roles = RoleOptions;
-  signUpService = inject(SignUpService);
+  signUpService = inject(AuthApiService);
   formSummaryError = signal<string>("");
 
   constructor(private fb: FormBuilder) {

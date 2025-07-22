@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../../models/response.model';
 import { environment } from '../../../environments/environment.development';
+import { SignUpInterface } from '../../models/sign-up.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -62,4 +63,9 @@ export class AuthApiService {
       }
     );
   }
+
+  signUpUser(userData: SignUpInterface): Observable<ResponseModel> {
+    return this.http.post<ResponseModel>(`${this.apiUri}/signup`, userData);
+  }
+
 }
