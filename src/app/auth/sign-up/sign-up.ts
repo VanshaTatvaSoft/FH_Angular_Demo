@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RoleOptions } from '../../shared/constants/select-options.constant.js'
 import { AuthApiService } from '../../services/auth-service/auth-api.service';
 import { ToastrService } from 'ngx-toastr';
+import { UsernameAvailableValidator } from '../../shared/validators/username-async.validator';
 
 @Component({
   selector: 'app-sign-up',
@@ -25,7 +26,7 @@ export class SignUp {
 
   constructor(private fb: FormBuilder) {
     this.signUpForm = this.fb.group({
-      userName: ['', [Validators.required]],
+      userName: ['', {validators:[Validators.required], asyncValidators: [UsernameAvailableValidator()], updateOn: 'blur'}],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       roleId: ['', [Validators.required]],

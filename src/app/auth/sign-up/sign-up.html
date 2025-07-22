@@ -41,6 +41,9 @@
       disabled: false
     }"
     [formControl]="userNameControl"
+    [customErrors]="{
+      usernameTaken: 'Username already taken. Try another.'
+    }"
   >
   </app-custom-input>
 
