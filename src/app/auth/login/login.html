@@ -22,7 +22,10 @@
       name: 'userName',
       disabled: false
     }"
-    [formControl]="userNameControl">
+    [formControl]="userNameControl"
+    [customErrors]="{
+      notFound: 'There is no such user'
+    }">
   </app-custom-input>
 
   <!-- Password input -->
