@@ -7,6 +7,7 @@ import { SecondNavbar } from './second-navbar/second-navbar';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from '../../services/login-service/login-service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthApiService } from '../../services/auth-service/auth-api.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './default-layout.css',
 })
 export class DefaultLayout {
-  constructor(private router: Router, private cookieService: CookieService, private loginService: LoginService, private toastr: ToastrService) {}
+  constructor(private router: Router, private cookieService: CookieService, private loginService: AuthApiService, private toastr: ToastrService) {}
 
   logout() {
     this.loginService.logout().subscribe({

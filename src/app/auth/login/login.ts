@@ -23,6 +23,7 @@ import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login-service/login-service';
 import { ToastrService } from 'ngx-toastr';
 import { CustomInput } from '../../shared/components/custom-input/custom-input';
+import { AuthApiService } from '../../services/auth-service/auth-api.service';
 
 @Component({
   selector: 'app-login',
@@ -46,7 +47,7 @@ export class Login {
 
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService,
+    private loginService: AuthApiService,
     private router: Router,
     private toastr: ToastrService
   ) {

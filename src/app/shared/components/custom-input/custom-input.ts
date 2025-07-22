@@ -73,7 +73,7 @@ export class CustomInput implements ControlValueAccessor {
     // fallback defaults
     switch (errorKey) {
       case 'required':
-        return 'This field is required.';
+        return `${this.customInput.label} is required.`;
       case 'minlength':
         return `Minimum ${this.formControl?.errors?.['minlength'].requiredLength} characters required.`;
       case 'maxlength':
