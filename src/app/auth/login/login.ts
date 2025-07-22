@@ -71,12 +71,12 @@ export class Login {
         );
       })
     ).subscribe((res) => {
-      const control = this.loginForm.get('userName');
-      if (res?.statusCode === 200) {
-        control?.setErrors(null);
-      }
-    });
-  }
+        const control = this.loginForm.get('userName');
+        if (res?.statusCode === 200) {
+          control?.setErrors(null);
+        }
+      });
+    }
 
   get userNameControl(): FormControl {
     return this.loginForm.get('userName') as FormControl;
@@ -86,7 +86,6 @@ export class Login {
   }
 
   onSubmit(): void {
-    debugger;
     if (this.loginForm.invalid) return;
 
     this.loginService.login(this.loginForm.value).subscribe({
