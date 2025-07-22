@@ -39,9 +39,18 @@ export class AuthApiService {
     return match ? match[1] === 'true' : false;
   }
 
-  validateAndRefreshToken(): Observable<ResponseModel> {
+  validateAccessToken(): Observable<any> {
+    return this.http.get<any>(
+      `${this.apiUri}/validate`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  refreshToken(): Observable<ResponseModel>{
     return this.http.get<ResponseModel>(
-      `${this.apiUri}/validate-refresh-token`,
+      `${this.apiUri}/refresh-token`,
       {
         withCredentials: true,
       }
