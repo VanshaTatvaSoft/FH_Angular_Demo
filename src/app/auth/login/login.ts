@@ -97,4 +97,7 @@ export class Login {
       },
     });
   }
+  toForgotPassword(){
+    this.router.navigate(['/forgot-password']);
+   }
 }
