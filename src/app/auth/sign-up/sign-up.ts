@@ -1,12 +1,13 @@
 
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CustomInput } from '../../shared/components/custom-input/custom-input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RoleOptions } from '../../shared/constants/select-options.constant.js'
 import { AuthApiService } from '../../services/auth-service/auth-api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,6 +19,8 @@ export class SignUp {
   signUpForm!: FormGroup;
   roles = RoleOptions;
   signUpService = inject(AuthApiService);
+  router = inject(Router)
+  toastr = inject(ToastrService);
   formSummaryError = signal<string>("");
 
   constructor(private fb: FormBuilder) {
@@ -35,6 +38,8 @@ export class SignUp {
     const { userName, firstName, lastName, role, emailAddress } = this.signUpForm.value;
     this.signUpService.signUpUser(this.signUpForm.value).subscribe({
       next: (res) => {
+        this.toastr.success(res.message || 'Sign Up Successful');
+        this.router.navigate(['/login']);
         console.log('Sign Up Succes:', res);
       },
       error: (err) => {

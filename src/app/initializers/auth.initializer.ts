@@ -1,5 +1,4 @@
 import { inject } from '@angular/core';
-import { LoginService } from '../services/login-service/login-service';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { AuthApiService } from '../services/auth-service/auth-api.service';
