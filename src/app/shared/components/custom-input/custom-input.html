@@ -9,7 +9,7 @@
 
   <!-- input field -->
   @if(customInput.type === "text" || customInput.type === "number" ||
-  customInput.type === "email" || customInput.type === "password") {
+  customInput.type === "email") {
   <input
     matInput
     [type]="customInput.type"
@@ -23,6 +23,24 @@
     [class]="customInput.class"
     autocomplete="off"
   />   
+  }
+
+  <!-- password input field -->
+  @if(customInput.type === "password"){
+    <input
+    matInput
+    [type]="customInput.type"
+    [placeholder]="customInput.placeholder"
+    [value]="customInput.value"
+    (input)="onInput($event)"
+    (blur)="onTouched()"
+    [id]="customInput.id"
+    [name]="customInput.name"
+    [disabled]="customInput.disabled"
+    [class]="customInput.class"
+    autocomplete="off"
+    appTogglePassword
+  />
   }
 
   <!-- select list -->
@@ -49,7 +67,6 @@
   <mat-hint>{{ customInput.hint }}</mat-hint>
   }
 </mat-form-field>
-
 <!-- error messages -->
 @for (error of getErrorKeys(); track $index) { @if(formControl.invalid &&
 (formControl.touched || formControl.dirty)) {
@@ -57,3 +74,4 @@
   {{ getErrorMessage(error) }}
 </mat-error>
 } }
+

@@ -4,13 +4,12 @@ import { MatInputModule } from '@angular/material/input';
 import { CustomInputInterface } from '../../../models/custom-input.interface';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
 import { NgClass } from '@angular/common';
+import { TogglePassword } from '../../../directives/toggle-password';
 
 @Component({
   selector: 'app-custom-input',
-  imports: [MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatOptionModule, NgClass],
+  imports: [MatFormFieldModule, MatIconModule, MatInputModule, TogglePassword, NgClass],
   templateUrl: './custom-input.html',
   styleUrl: './custom-input.css',
   providers: [
@@ -73,7 +72,7 @@ export class CustomInput implements ControlValueAccessor {
     // fallback defaults
     switch (errorKey) {
       case 'required':
-        return 'This field is required.';
+        return `${this.customInput.label} is required.`;
       case 'minlength':
         return `Minimum ${this.formControl?.errors?.['minlength'].requiredLength} characters required.`;
       case 'maxlength':

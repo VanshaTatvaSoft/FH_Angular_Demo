@@ -1,72 +1,63 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <h1 class="mb-3">Login</h1>
+  <h1 class="text-center animate__animated animate__fadeInDown fs-3 mb-4 mb-0 text-purple">Login</h1>
 
   <!-- Username input -->
-  <mat-form-field class="w-100 mb-2" appearance="outline">
+  <!-- <mat-form-field class="w-100 mb-2" appearance="outline">
     <mat-label>Username</mat-label>
-    <input
-      type="email"
-      matInput
-      formControlName="userName"
-      placeholder="Enter Username"
-    />
-    <mat-error
-      *ngIf="
-        loginForm.get('userName')?.touched && loginForm.get('userName')?.invalid
-      "
-      class="fs-6"
-    >
-      <span *ngIf="loginForm.get('userName')?.hasError('required')"
-        >Username is required</span
-      >
-      <!-- <span *ngIf="loginForm.get('email')?.hasError('notFound')">This email is not registered</span> -->
+    <input type="text" matInput formControlName="userName" placeholder="Enter Username">
+    <mat-error *ngIf="loginForm.get('userName')?.touched && loginForm.get('userName')?.invalid" class="fs-6">
+      <span *ngIf="loginForm.get('userName')?.hasError('required')">Username is required</span>
+      <span *ngIf="loginForm.get('userName')?.hasError('notFound')">There is no such user</span>
     </mat-error>
-  </mat-form-field>
+  </mat-form-field> -->
+  <app-custom-input
+    formControlName="userName"
+    [customInput]="{
+      appearance: 'outline',
+      label: 'Username',
+      type: 'text',
+      placeholder: 'Enter Username',
+      value: '',
+      id: 'userName',
+      name: 'userName',
+      disabled: false
+    }"
+    [formControl]="userNameControl">
+  </app-custom-input>
 
   <!-- Password input -->
-  <mat-form-field class="w-100" appearance="outline">
+  <!-- <mat-form-field class="w-100" appearance="outline">
     <mat-label>Password</mat-label>
-    <input
-      type="password"
-      matInput
-      formControlName="password"
-      placeholder="Enter Email"
-      appTogglePassword
-    />
-    <mat-error
-      *ngIf="
-        loginForm.get('password')?.touched && loginForm.get('password')?.invalid
-      "
-      class="fs-6"
-    >
-      <span *ngIf="loginForm.get('password')?.hasError('required')"
-        >Password is required</span
-      >
+    <input type="password" matInput formControlName="password" placeholder="Enter Password" appTogglePassword>
+    <mat-error *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="fs-6">
+      <span *ngIf="loginForm.get('password')?.hasError('required')">Password is required</span>
     </mat-error>
-  </mat-form-field>
+  </mat-form-field> -->
+  <app-custom-input
+    formControlName="password"
+    [customInput]="{
+      appearance: 'outline',
+      label: 'Password',
+      type: 'password',
+      placeholder: 'Enter Password',
+      value: '',
+      id: 'password',
+      name: 'password',
+      disabled: false
+    }"
+    [formControl]="passwordControl">
+  </app-custom-input>
 
-  <div class="d-flex justify-content-between align-items-center">
+  <div class="d-flex justify-content-between align-items-center mt-2">
     <!-- Checkbox -->
-    <mat-checkbox class="example-margin" formControlName="remmemberMe"
-      ><span class="fs-6">Remmember Me</span></mat-checkbox
-    >
-    <a href="#!" class="text-body">Forgot password?</a>
+    <mat-checkbox class="example-margin" formControlName="rememberMe"><span class="fs-6">Remember Me</span></mat-checkbox>
+    <a (click)="toForgotPassword()" class="text-body">Forgot password?</a>
   </div>
 
   <div class="text-center text-lg-start mt-4 pt-2">
-    <button
-      type="submit"
-      data-mdb-button-init
-      data-mdb-ripple-init
-      class="btn btn-primary btn-lg"
-      style="padding-left: 2.5rem; padding-right: 2.5rem"
-      [disabled]="loginForm.invalid"
-    >
-      Login
-    </button>
-    <p class="small fw-bold mt-2 pt-1 mb-0">
-      Don't have an account?
-      <a routerLink="/sign-up" class="link-danger">Register</a>
-    </p>
+    <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
+      style="padding-left: 2.5rem; padding-right: 2.5rem;" [disabled]="loginForm.invalid">Login</button>
+    <p class="fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
+        class="link-danger" routerLink="/sign-up">Register</a></p>
   </div>
 </form>

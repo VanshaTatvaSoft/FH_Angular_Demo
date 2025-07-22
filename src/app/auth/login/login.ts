@@ -1,64 +1,111 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
-import { TogglePassword } from '../../directives/toggle-password';
-import { RouterLink } from '@angular/router';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  of,
+  switchMap,
+} from 'rxjs';
+import { Router, RouterLink } from '@angular/router';
+import { LoginService } from '../../services/login-service/login-service';
+import { ToastrService } from 'ngx-toastr';
+import { CustomInput } from '../../shared/components/custom-input/custom-input';
+import { AuthApiService } from '../../services/auth-service/auth-api.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatIconModule, MatIconModule, TogglePassword, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatIconModule,
+    RouterLink,
+    CustomInput,
+  ],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrl: './login.css',
 })
 export class Login {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder){
+  constructor(
+    private fb: FormBuilder,
+    private loginService: AuthApiService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
     this.loginForm = this.fb.group({
       userName: ['', [Validators.required]],
       password: ['', Validators.required],
-      remmemberMe: [false]
-    })
-  }
+      rememberMe: [false],
+    });
 
-  onSubmit(): void{
-    if (this.loginForm.invalid) return;
-
-    const { email, password } = this.loginForm.value;
-
-    this.fakeLoginApi(email, password).subscribe({
-      next: (res) => {
-        console.log('Login success:', res);
-        this.loginForm.get('email')?.setErrors(null);
-      },
-      error: (err) => {
-        if (err === 'EMAIL_NOT_FOUND') {
-          this.loginForm.get('email')?.setErrors({ notFound: true });
-          this.loginForm.get('email')?.markAsTouched();
-        }
+    this.loginForm.get('userName')?.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap((userName: string) => {
+        if (!userName) return of(null);
+        return this.loginService.checkUserExists(userName).pipe(
+          catchError((err) => {
+            if (err.status === 404) {
+              this.loginForm.get('userName')?.setErrors({ notFound: true });
+            }
+            return of(null);
+          })
+        );
+      })
+    ).subscribe((res) => {
+      const control = this.loginForm.get('userName');
+      if (res?.statusCode === 200) {
+        control?.setErrors(null);
       }
     });
   }
 
-  fakeLoginApi(email: string, password: string): Observable<any> {
-    return new Observable((observer) => {
-      setTimeout(() => {
-        if (email !== 'user@example.com') {
-          observer.error('EMAIL_NOT_FOUND');
-        } else if (password !== '123456') {
-          observer.error('INVALID_PASSWORD');
-        } else {
-          observer.next({ token: 'abc123' });
-          observer.complete();
-        }
-      }, 1000);
-    });
+  get userNameControl(): FormControl {
+    return this.loginForm.get('userName') as FormControl;
+  }
+  get passwordControl(): FormControl {
+    return this.loginForm.get('password') as FormControl;
   }
 
+  onSubmit(): void {
+    debugger;
+    if (this.loginForm.invalid) return;
+
+    this.loginService.login(this.loginForm.value).subscribe({
+      next: (res) => {
+        if (res.statusCode === 200) {
+          this.toastr.success('Login successful!');
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.toastr.error(res.message || 'Login failed. Please try again.');
+        }
+      },
+      error: (err) => {
+        const msg = err.error?.message || 'Something went wrong';
+        this.toastr.error(msg);
+      },
+    });
+  }
+  toForgotPassword(){
+    this.router.navigate(['/forgot-password']);
+   }
 }

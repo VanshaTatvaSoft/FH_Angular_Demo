@@ -4,6 +4,11 @@ import { navItems } from './_nav';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MainNavbar } from './main-navbar/main-navbar';
 import { SecondNavbar } from './second-navbar/second-navbar';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../../services/login-service/login-service';
+import { ToastrService } from 'ngx-toastr';
+import { AuthApiService } from '../../services/auth-service/auth-api.service';
+
 
 @Component({
   selector: 'app-default-layout',
@@ -13,20 +18,27 @@ import { SecondNavbar } from './second-navbar/second-navbar';
     RouterOutlet,
     NgScrollbarModule,
     MainNavbar,
-    SecondNavbar
+    SecondNavbar,
   ],
   templateUrl: './default-layout.html',
   styleUrl: './default-layout.css',
 })
 export class DefaultLayout {
-
-  constructor(private router: Router){
-
-  }
+  constructor(private router: Router, private cookieService: CookieService, private loginService: AuthApiService, private toastr: ToastrService) {}
 
   logout() {
-    localStorage.clear();
-    this.router.navigate(['/login']);
+    this.loginService.logout().subscribe({
+      next: (res) => {
+        if(res.statusCode === 200) {
+          this.cookieService.deleteAll();
+          this.toastr.success(res.message || 'Logout successful!');
+          this.router.navigate(['/login']);
+        }
+      },
+      error: (err) => {
+        const msg = err.error?.message || 'Something went wrong';
+        this.toastr.error(msg);
+      }
+    })
   }
-  
 }
