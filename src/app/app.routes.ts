@@ -6,7 +6,6 @@ import { ScreenBuilderLayout } from './layout/screen-builder-layout/screen-build
 import { SbHome } from './screenBuilderPages/sb-home/sb-home';
 import { Home } from './views/home/home';
 import { LoginLayout } from './layout/login-layout/login-layout/login-layout';
-import { ForgotPassword } from './auth/forgot-password/forgot-password';
 import { entryGuard } from './guards/entry-guard';
 
 export const routes: Routes = [
@@ -17,7 +16,6 @@ export const routes: Routes = [
     canActivate: [entryGuard],
     children: [
       { path: 'login', component: Login },
-      { path: 'forgotpassword', component: ForgotPassword },
       {
         path: 'sign-up',
         loadComponent: () =>

@@ -4,10 +4,12 @@ import { MatInputModule } from '@angular/material/input';
 import { CustomInputInterface } from '../../../models/custom-input.interface';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgClass } from '@angular/common';
+import { TogglePassword } from '../../../directives/toggle-password';
 
 @Component({
   selector: 'app-custom-input',
-  imports: [MatFormFieldModule, MatIconModule, MatInputModule],
+  imports: [MatFormFieldModule, MatIconModule, MatInputModule, TogglePassword],
   templateUrl: './custom-input.html',
   styleUrl: './custom-input.css',
   providers: [

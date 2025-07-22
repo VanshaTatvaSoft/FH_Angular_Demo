@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -15,14 +16,13 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
-  Observable,
   of,
   switchMap,
 } from 'rxjs';
-import { TogglePassword } from '../../directives/toggle-password';
 import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login-service/login-service';
 import { ToastrService } from 'ngx-toastr';
+import { CustomInput } from '../../shared/components/custom-input/custom-input';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +36,7 @@ import { ToastrService } from 'ngx-toastr';
     MatCheckboxModule,
     MatIconModule,
     RouterLink,
-    TogglePassword,
+    CustomInput,
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -97,4 +97,12 @@ export class Login {
       },
     });
   }
+
+  get userNameControl(): FormControl{
+    return this.loginForm.get('userName') as FormControl;
+  }
+  get passwordControl(): FormControl {
+    return this.loginForm.get('password') as FormControl;
+  }
+
 }
