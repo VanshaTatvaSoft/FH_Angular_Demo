@@ -78,6 +78,13 @@ export class Login {
     });
   }
 
+  get userNameControl(): FormControl {
+    return this.loginForm.get('userName') as FormControl;
+  }
+  get passwordControl(): FormControl {
+    return this.loginForm.get('password') as FormControl;
+  }
+
   onSubmit(): void {
     debugger;
     if (this.loginForm.invalid) return;
@@ -97,12 +104,7 @@ export class Login {
       },
     });
   }
-
-  get userNameControl(): FormControl{
-    return this.loginForm.get('userName') as FormControl;
-  }
-  get passwordControl(): FormControl {
-    return this.loginForm.get('password') as FormControl;
-  }
-
+  toForgotPassword(){
+    this.router.navigate(['/forgot-password']);
+   }
 }
