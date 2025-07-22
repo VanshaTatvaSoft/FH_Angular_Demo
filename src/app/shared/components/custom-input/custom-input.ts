@@ -12,7 +12,7 @@ import { MatOptionModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-custom-input',
-  imports: [MatFormFieldModule, MatIconModule, MatInputModule, TogglePassword, NgClass,MatSelectModule, MatOptionModule],
+  imports: [MatFormFieldModule, MatIconModule, MatInputModule, TogglePassword, NgClass, MatSelectModule, MatOptionModule],
   templateUrl: './custom-input.html',
   styleUrl: './custom-input.css',
   providers: [
@@ -84,6 +84,8 @@ export class CustomInput implements ControlValueAccessor {
         return 'Invalid email.';
       case 'pattern':
         return 'Invalid pattern.';
+      case 'usernameTaken':
+        return 'Username is already taken.';
       default:
         return 'Invalid field.';
     }
